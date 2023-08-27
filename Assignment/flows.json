@@ -1,0 +1,460 @@
+[
+    {
+        "id": "f518ede7bed026e3",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "faa3a36c850ff464",
+        "type": "mqtt in",
+        "z": "f518ede7bed026e3",
+        "name": "",
+        "topic": "IOTBDA/assignment",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "0a226528caed46be",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 270,
+        "y": 200,
+        "wires": [
+            [
+                "7e8d73a53c49c78a",
+                "d0e780d18e0277bc",
+                "7c7bb9755d2e9ecb"
+            ]
+        ]
+    },
+    {
+        "id": "7e8d73a53c49c78a",
+        "type": "function",
+        "z": "f518ede7bed026e3",
+        "name": "Temperature Filter",
+        "func": "msg.payload = msg.payload.temperature\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 120,
+        "wires": [
+            [
+                "6e1a43b006b5383d"
+            ]
+        ]
+    },
+    {
+        "id": "d0e780d18e0277bc",
+        "type": "function",
+        "z": "f518ede7bed026e3",
+        "name": "Humidity Filter",
+        "func": "msg.payload = msg.payload.humidity\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 200,
+        "wires": [
+            [
+                "ca52e7b9c36f08df"
+            ]
+        ]
+    },
+    {
+        "id": "6e1a43b006b5383d",
+        "type": "ui_gauge",
+        "z": "f518ede7bed026e3",
+        "name": "",
+        "group": "4477895b82815435",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "wave",
+        "title": "Temperature",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 750,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "ca52e7b9c36f08df",
+        "type": "ui_gauge",
+        "z": "f518ede7bed026e3",
+        "name": "",
+        "group": "4477895b82815435",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "wave",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 740,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "7c7bb9755d2e9ecb",
+        "type": "function",
+        "z": "f518ede7bed026e3",
+        "name": "Heat Index Filter",
+        "func": "msg.payload = parseFloat(msg.payload.heat_index).toFixed(2)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 280,
+        "wires": [
+            [
+                "841e73f6cb581376"
+            ]
+        ]
+    },
+    {
+        "id": "841e73f6cb581376",
+        "type": "ui_gauge",
+        "z": "f518ede7bed026e3",
+        "name": "",
+        "group": "4477895b82815435",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Heat Index",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "200",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 750,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "6fe76ac7254f6c30",
+        "type": "inject",
+        "z": "f518ede7bed026e3",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "2",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 234.00000762939453,
+        "y": 403.00001335144043,
+        "wires": [
+            [
+                "04df503bcfe32ce4",
+                "cb2be68010ee7ce2"
+            ]
+        ]
+    },
+    {
+        "id": "04df503bcfe32ce4",
+        "type": "file in",
+        "z": "f518ede7bed026e3",
+        "name": "File Path",
+        "filename": "/home/pi/SLIIT/Assignment/previous.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 404.00000762939453,
+        "y": 403.00001335144043,
+        "wires": [
+            [
+                "d9e8b6f9d3da78cb"
+            ]
+        ]
+    },
+    {
+        "id": "d9e8b6f9d3da78cb",
+        "type": "json",
+        "z": "f518ede7bed026e3",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 554.0000076293945,
+        "y": 403.00001335144043,
+        "wires": [
+            [
+                "1d48c4e1401ec0a4"
+            ]
+        ]
+    },
+    {
+        "id": "a1f37f5ecf29f667",
+        "type": "ui_chart",
+        "z": "f518ede7bed026e3",
+        "name": "",
+        "group": "eab932ade2e20a07",
+        "order": 0,
+        "width": "20",
+        "height": "7",
+        "label": "Relative Humidity (Past Year)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "Y-M-D",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 924.0000076293945,
+        "y": 403.00001335144043,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1d48c4e1401ec0a4",
+        "type": "function",
+        "z": "f518ede7bed026e3",
+        "name": "function 2",
+        "func": "var rh = {};\n\nrh.labels = msg.payload.date\n\nrh.series = [\n    \"RH\"\n]\n\nrh.data = [msg.payload.data]\n\nmsg.payload = [rh];\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 704.0000076293945,
+        "y": 403.00001335144043,
+        "wires": [
+            [
+                "a1f37f5ecf29f667"
+            ]
+        ]
+    },
+    {
+        "id": "cb2be68010ee7ce2",
+        "type": "file in",
+        "z": "f518ede7bed026e3",
+        "name": "File Path",
+        "filename": "/home/pi/SLIIT/Assignment/forecast.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 400,
+        "y": 500,
+        "wires": [
+            [
+                "cc9943f0b08963fc"
+            ]
+        ]
+    },
+    {
+        "id": "cc9943f0b08963fc",
+        "type": "json",
+        "z": "f518ede7bed026e3",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 550,
+        "y": 500,
+        "wires": [
+            [
+                "6770c2f08767fe98"
+            ]
+        ]
+    },
+    {
+        "id": "ddbfa580d255eccb",
+        "type": "ui_chart",
+        "z": "f518ede7bed026e3",
+        "name": "",
+        "group": "eab932ade2e20a07",
+        "order": 0,
+        "width": "20",
+        "height": "7",
+        "label": "Relative Humidity (Next Year)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "Y-M-D",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 920,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6770c2f08767fe98",
+        "type": "function",
+        "z": "f518ede7bed026e3",
+        "name": "function 3",
+        "func": "var rh = {};\n\nrh.labels = msg.payload.date\n\nrh.series = [\n    \"RH\"\n]\n\nrh.data = [msg.payload.data]\n\nmsg.payload = [rh];\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 500,
+        "wires": [
+            [
+                "ddbfa580d255eccb"
+            ]
+        ]
+    },
+    {
+        "id": "0a226528caed46be",
+        "type": "mqtt-broker",
+        "name": "IOTBDA/assignment",
+        "broker": "611449a08baa453c810a4d80ab1d5652.s2.eu.hivemq.cloud",
+        "port": "8883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "5",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "4477895b82815435",
+        "type": "ui_group",
+        "name": "Values",
+        "tab": "d46bee4c7101dc2a",
+        "order": 1,
+        "disp": false,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "eab932ade2e20a07",
+        "type": "ui_group",
+        "name": "Chart",
+        "tab": "d46bee4c7101dc2a",
+        "order": 4,
+        "disp": false,
+        "width": "20",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d46bee4c7101dc2a",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
